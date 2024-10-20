@@ -1,33 +1,38 @@
-// Online C compiler to run C program online
-#include <stdio.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
 
-double func(double x){
+float f(float x){
     return x*x*x - x*x + 2;
 }
 
-void bisection(double a,double b){
-    if(func(a)* func(b) >= 0){
-        printf("Assumed values are wrong\n");
-        return;
+int main(){
+    float a,b,c,te;
+    printf("Enter the intervals : ");
+    scanf("%f %f",&a,&b);
+    printf("Enter tolerance error : ");
+    scanf("%f",&te);
+    if(f(a)*f(b) > 0){
+        printf("Intervals guessed are wrong ");
+        return 0;
     }
-    double c = a;
-    while((b-a) >= 0.01){
-        c = (b+a)/2;
-        if(func(c) == 0.0){
+    if(f(a)*f(b) == 0){
+        printf("Guessed intervals are the roots");
+        return 0;
+    }
+
+    while(1){
+        c = (a+b)/2;
+        if(fabs(f(c)) < te){
             break;
         }
-        if(func(c)*func(a) > 0){
-            a=c;
+        if(f(a)*f(c) > 0){
+            a = c;
         }else{
-            b=c;
+            b = c;
         }
+        printf("Interval : [ %f , %f ]\n",a,b);
     }
-    printf("Root for the given equation is : %.4f",c);
-}
-
-int main() {
-    double a =-200, b = 300;
-    bisection(a, b);
-    return 0;
+    printf("Roots of the equation : %.4f",c);
     return 0;
 }

@@ -1,31 +1,35 @@
 #include<stdio.h>
+#include<stdlib.h>
 #include<math.h>
-#define MAX_ITER 1000000
 
-double func(double x){
-    return pow(x, 3) + x - 1;
-}
-
-void secant(double x0, double x1){
-    double x2;
-
-    if(func(x0)*func(x1) > 0){
-        printf("Assumed Values are wrong\n");
-        return;
-    }
-    for(int i=0;i<MAX_ITER;i++){
-
-        x2 = ((x0*func(x1)-x1*func(x0))/(func(x1)-func(x0)));
-
-        if(fabs(x2-x1) < 0.001){
-            break;
-        }
-        x0 = x1;
-        x1 = x2;
-    }
-    printf("Root found = %f",x2);
+float f(float x){
+    return x*x*x - x*x + 2;
 }
 
 int main(){
-    secant(0,1);
+    float a,b,c,te;
+    printf("Enter the intervals : ");
+    scanf("%f %f",&a,&b);
+    printf("Enter tolerance error : ");
+    scanf("%f",&te);
+    if(f(a)*f(b) > 0){
+        printf("Intervals guessed are wrong ");
+        return 0;
+    }
+    if(f(a)*f(b) == 0){
+        printf("Guessed intervals are the roots");
+        return 0;
+    }
+
+    while(1){
+        c = (a*f(b)-f(a)*b)/(f(b)-f(a));
+        if(fabs(f(c)) < te){
+            break;
+        }
+        a = b;
+        b = c;
+        printf("Interval : [ %f , %f ]\n",a,b);
+    }
+    printf("Roots of the equation : %.4f",c);
+    return 0;
 }

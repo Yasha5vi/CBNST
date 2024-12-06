@@ -3,11 +3,11 @@
 #define MAX_ITER 1000000
 
 double f(double x){
-    return x*x*x - x*x + 2;
+    return x*x*x + x - 1;
 }
 
 double df(double x){
-    return 3*x*x - 2*x;
+    return 3*x*x + 1;
 }
 
 void newtonRapson(double x0){
@@ -22,7 +22,7 @@ void newtonRapson(double x0){
         }
 
         x1 = x0 - f0/df0;
-        if(fabs(f(x1)) < 0.001){
+        if(fabs(x1-x0) < 0.001){
             break;
         }
         x0 = x1;
@@ -31,5 +31,5 @@ void newtonRapson(double x0){
 }
 
 int main(){
-    newtonRapson(3);
+    newtonRapson(0);
 }
